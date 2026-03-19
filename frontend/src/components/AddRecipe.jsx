@@ -9,13 +9,24 @@ export default function AddRecipe({ onAddRecipe }) {
   const [name, setName] = useState("");
   const [ingredientsText, setIngredientsText] = useState("");
   const [instructionsText, setInstructionsText] = useState("");
+  const [saving, setSaving] = useState(false);
+  const [error, setError] = useState("");
 
   const navigate = useNavigate();
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
-    onAddRecipe({ name, ingredientsText, instructionsText });
-    navigate("/");
+    setSaving(true);
+    setError("");
+
+    try {
+      await onAddRecipe({ name, ingredientsText, instructionsText });
+      navigate("/");
+    } catch (err) {
+      setError(err.message || "Failed to save recipe");
+    } finally {
+      setSaving(false);
+    }
   }
 
   return (
@@ -31,6 +42,7 @@ export default function AddRecipe({ onAddRecipe }) {
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="e.g. Dorm Quesadilla"
+            required
           />
 
           <label htmlFor={ingId}>Ingredients (comma-separated)</label>
@@ -40,6 +52,7 @@ export default function AddRecipe({ onAddRecipe }) {
             value={ingredientsText}
             onChange={(e) => setIngredientsText(e.target.value)}
             placeholder="Eggs, Rice, Cheese"
+            required
           />
 
           <label htmlFor={instId}>Instructions (one step per line)</label>
@@ -49,10 +62,13 @@ export default function AddRecipe({ onAddRecipe }) {
             value={instructionsText}
             onChange={(e) => setInstructionsText(e.target.value)}
             placeholder={"Step 1...\nStep 2...\nStep 3..."}
+            required
           />
 
-          <button className="button" type="submit">
-            Save Recipe
+          {error && <p>{error}</p>}
+
+          <button className="button" type="submit" disabled={saving}>
+            {saving ? "Saving..." : "Save Recipe"}
           </button>
         </form>
       </section>

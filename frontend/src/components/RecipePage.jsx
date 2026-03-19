@@ -2,7 +2,7 @@ import { Link, useParams } from "react-router-dom";
 
 export default function RecipePage({ recipes }) {
   const { id } = useParams();
-  const recipe = recipes.find((r) => r.id === id);
+  const recipe = recipes.find((r) => r._id === id);
 
   if (!recipe) {
     return (

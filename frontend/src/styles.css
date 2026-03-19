@@ -1,16 +1,24 @@
 :root {
   --primary: #4f7c5f;
+  --primary-hover: #40684f;
   --bg: #f8f8f6;
   --card: #ffffff;
+  --card-2: #f3f4f1;
   --text: #222;
   --border: #e5e5e5;
   --muted: #666;
+  --danger: #b42318;
   --radius: 10px;
   --max-width: 1000px;
+  --shadow: 0 4px 18px rgba(0, 0, 0, 0.05);
 }
 
 * {
   box-sizing: border-box;
+}
+
+html {
+  min-height: 100%;
 }
 
 body {
@@ -21,74 +29,91 @@ body {
     sans-serif;
   background: var(--bg);
   color: var(--text);
-  min-height: 100vh; 
+  min-height: 100vh;
+  line-height: 1.5;
+}
+
+a {
+  color: inherit;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+button,
+input,
+textarea {
+  font: inherit;
 }
 
 body.dark {
-  background: #121212;
-  color: #f1f1f1;
-}
-
-body.dark header {
-  background: #1a1a1a;
-  border-bottom: 1px solid #2a2a2a;
-}
-
-body.dark nav a {
-  color: #6fbf91;
-}
-
-body.dark .card,
-body.dark .recipe-row,
-body.dark .pill {
-  background: #1e1e1e;
-  border: 1px solid #2a2a2a;
-}
-
-body.dark .pill.selected {
-  background: #4f7c5f;
-  color: white;
-  border-color: #4f7c5f;
-}
-
-body.dark .button {
-  background: #4f7c5f;
-}
-
-body.dark .match {
-  color: #9a9a9a;
-}
-
-body.dark input,
-body.dark textarea {
-  background: #1e1e1e;
-  color: #f1f1f1;
-  border: 1px solid #2a2a2a;
-}
-
-body.dark input::placeholder,
-body.dark textarea::placeholder {
-  color: #9a9a9a;
+  --bg: #121212;
+  --card: #1a1a1a;
+  --card-2: #1e1e1e;
+  --text: #f1f1f1;
+  --border: #2a2a2a;
+  --muted: #a0a0a0;
+  --shadow: none;
 }
 
 header {
   background: var(--card);
   border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 20;
 }
 
 nav {
   max-width: var(--max-width);
   margin: 0 auto;
-  padding: 0.75rem 1rem;
+  padding: 0.9rem 1rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 1rem;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: inherit;
+  text-decoration: none;
+  min-width: 0;
+}
+
+.brand-logo {
+  height: 48px;
+  width: auto;
+  display: block;
+  flex-shrink: 0;
+}
+
+.brand h2,
+.brand h1,
+.brand span,
+.brand p {
+  margin: 0;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
 }
 
 nav a {
   text-decoration: none;
   color: var(--primary);
-  margin-left: 1rem;
+  font-weight: 500;
+}
+
+nav a:hover {
+  text-decoration: underline;
 }
 
 main {
@@ -97,8 +122,22 @@ main {
   padding: 2rem 1rem;
 }
 
+h1,
+h2,
+h3 {
+  line-height: 1.2;
+}
+
 h1 {
-  margin-bottom: 1.5rem;
+  margin: 0 0 1.5rem;
+}
+
+h2 {
+  margin-top: 0;
+}
+
+p {
+  margin-top: 0;
 }
 
 .card {
@@ -107,6 +146,7 @@ h1 {
   border-radius: var(--radius);
   padding: 1.5rem;
   margin-bottom: 2rem;
+  box-shadow: var(--shadow);
 }
 
 .button {
@@ -114,12 +154,31 @@ h1 {
   color: white;
   border: none;
   border-radius: var(--radius);
-  padding: 0.6rem 1.2rem;
+  padding: 0.65rem 1.1rem;
   cursor: pointer;
+  transition:
+    background 0.2s ease,
+    opacity 0.2s ease,
+    transform 0.1s ease;
 }
 
 .button:hover {
-  opacity: 0.9;
+  background: var(--primary-hover);
+}
+
+.button:active {
+  transform: translateY(1px);
+}
+
+.button:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.button.secondary {
+  background: var(--card-2);
+  color: var(--text);
+  border: 1px solid var(--border);
 }
 
 .pill-grid {
@@ -134,8 +193,16 @@ h1 {
   border: 1px solid var(--border);
   cursor: pointer;
   background: var(--card);
-  transition: 0.2s ease;
-  font: inherit;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease,
+    transform 0.1s ease;
+  color: var(--text);
+}
+
+.pill:hover {
+  transform: translateY(-1px);
 }
 
 .pill.selected {
@@ -158,34 +225,30 @@ h1 {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 1rem;
   background: var(--card);
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  padding: 1rem 1.5rem;
+  padding: 1rem 1.25rem;
 }
 
 .recipe-row h3 {
-  margin: 0;
+  margin: 0 0 0.2rem;
 }
 
 .match {
   color: var(--muted);
-  font-size: 0.9rem;
+  font-size: 0.92rem;
+  margin: 0;
 }
 
-.brand {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.75rem;
-  color: inherit;
-  text-decoration: none;
+ul,
+ol {
+  padding-left: 1.25rem;
 }
 
-.brand-logo {
-  height: 48px; 
-  width: auto;
-  display: block;
-  flex-shrink: 0;
+li + li {
+  margin-top: 0.4rem;
 }
 
 form {
@@ -195,37 +258,114 @@ form {
 }
 
 form label {
-  font-weight: 500;
+  font-weight: 600;
+  margin-bottom: -0.4rem;
 }
 
 form input,
 form textarea {
   width: 100%;
-  padding: 0.6rem;
+  padding: 0.7rem 0.8rem;
   border-radius: var(--radius);
   border: 1px solid var(--border);
-  font: inherit;
+  background: var(--card);
+  color: var(--text);
 }
 
 form textarea {
   resize: vertical;
+  min-height: 110px;
+}
+
+form input::placeholder,
+form textarea::placeholder {
+  color: var(--muted);
+}
+
+form input:focus,
+form textarea:focus,
+.button:focus,
+nav a:focus {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
 }
 
 form button {
   align-self: flex-start;
   margin-top: 0.5rem;
 }
-/* mobile */ 
-@media (max-width: 600px) {
+
+.error-text {
+  color: var(--danger);
+  margin: 0;
+  font-weight: 500;
+}
+
+.helper-text {
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.center-message {
+  text-align: center;
+  padding: 2rem 1rem;
+}
+
+.auth-card {
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.empty-state {
+  color: var(--muted);
+}
+
+body.dark nav a {
+  color: #8fd0aa;
+}
+
+body.dark .pill.selected,
+body.dark .button {
+  background: var(--primary);
+  color: white;
+  border-color: var(--primary);
+}
+
+body.dark .button:hover {
+  background: var(--primary-hover);
+}
+
+body.dark .button.secondary {
+  background: var(--card-2);
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+
+@media (max-width: 700px) {
   nav {
     flex-direction: column;
-    align-items: flex-start;
-    gap: 1rem;
+    align-items: stretch;
+  }
+
+  .brand {
+    justify-content: center;
+  }
+
+  .nav-links {
+    justify-content: center;
   }
 
   .recipe-row {
     flex-direction: column;
     align-items: flex-start;
-    gap: 1rem;
+  }
+
+  .recipe-row .button {
+    width: 100%;
+  }
+
+  form button {
+    width: 100%;
+    align-self: stretch;
   }
 }
