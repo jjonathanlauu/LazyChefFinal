@@ -15,7 +15,7 @@ export default function Header({ darkMode, onToggleDarkMode }) {
         <strong>
           <Link to="/" className="brand">
             <img
-              src="/assets/lazychef-logo.png"
+              src="/lazychef-logo.png"
               alt="LazyChef logo"
               className="brand-logo"
             />
